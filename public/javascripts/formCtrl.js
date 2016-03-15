@@ -16,6 +16,7 @@ app.controller('formCtrl', function($scope){
     $scope.creditValid = valid_credit_card(user.credit)
 
     if(formInvalid || !$scope.creditValid) {
+
      console.log('form invalid') 
    } else {
     console.log('submit') 
@@ -29,9 +30,6 @@ $scope.yearArr = [year];
 for (var i = year+1; i <= year + 20; i++){
   $scope.yearArr.push(i);
 }
-
-
-
 
 function valid_credit_card(value) {
   if (/[^0-9-\s]+/.test(value)) return false;

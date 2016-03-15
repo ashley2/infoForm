@@ -8,6 +8,9 @@
   font-size: 30px;
   text-align: center;
 }
+#header {
+  color: gray;
+}
 
 #directions {
   margin-bottom: 70px;
@@ -27,10 +30,11 @@ label {
   border: 0;
   outline: 0;
   background: transparent;
-  border: 3px solid blue;
-
+  border: 3px solid #00ffff;
 }
-
+.disabled {
+  background-color: darkgray;
+}
 
 #formField {
   padding: 20px;
@@ -40,20 +44,48 @@ label {
   margin: 0 auto;
 }
 
-input {
+#zipInput, #cvvInput {
+  display: inline-block;
+  width: 100px;
+  margin: 0
+}
+
+#yearInput {
+
   box-shadow:inset 0 0 10px #000000;
   -moz-box-shadow:inset 0 0 10px #000000;
   -webkit-box-shadow:inset 0 0 10px #000000;
-  background: transparent;
+  background: white;
   text-align: center;
   font-size: 20px;
   border: 0;
   outline: 0;
-  background: transparent;
-  // border-2px solid gray;
-  width: 200px;
+  width: 40px;
+  display: inline-block;
+  // margin-bottom: 25px;
+  border-radius: 7px;
+  &:focus {
+    outline:none;
+  }
+  &:hover {
+    background-color: lightblue;
+  }
+}
+
+
+input {
+  box-shadow:inset 0 0 10px #000000;
+  -moz-box-shadow:inset 0 0 10px #000000;
+  -webkit-box-shadow:inset 0 0 10px #000000;
+  background: white;
+  text-align: center;
+  font-size: 20px;
+  border: 0;
+  outline: 0;
+  width: 300px;
   display: block;
-  margin-bottom: 25px;
+  // margin-bottom: 25px;
+  border-radius: 7px;
   &:focus {
     outline:none;
   }
@@ -66,20 +98,19 @@ input {
   color: red;
   display: inline-block;
 }
-#invalidAlerts {
-  display: inline-block;
-  width: 280px;
-
-}
 
 #fields {
+  margin: 0 auto;
   display: inline-block;
-  width: 250px;
+  width: 300px;
+  height: 400px;
+  margin-top: 10px;
 }
 
 select {
   font-size: 15px;
   text-align:center;
+  // margin-bottom: 20px;
   &:hover {
     background-color: lightblue;
   }
@@ -91,35 +122,41 @@ select {
 
 #countries {
   width: 200px;
+  margin-bottom: 15px;
 }
 
-// input[type=text], select {
-//     width: 100%;
-//     padding: 12px 20px;
-//     margin: 8px 0;
-//     display: inline-block;
-//     border: 1px solid #ccc;
-//     border-radius: 4px;
-//     box-sizing: border-box;
-// }
+#buttonDiv {
+margin: 0 auto;
+width: 600px;
+text-align: center;
 
-// input[type=submit] {
-//     width: 100%;
-//     background-color: #4CAF50;
-//     color: white;
-//     padding: 14px 20px;
-//     margin: 8px 0;
-//     border: none;
-//     border-radius: 4px;
-//     cursor: pointer;
-// }
+}
 
-// input[type=submit]:hover {
-//     background-color: #45a049;
-// }
-
-// div {
-//     border-radius: 5px;
-//     background-color: #f2f2f2;
-//     padding: 40px;
-// }
+button {  
+  font-size: 20px;
+  height: 30px;
+  width: 90px;
+  text-align: center;
+  color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+  transition: background-color 2s ease;
+  &:hover {
+    background-color: #346392;
+    text-shadow: -1px 1px #27496d;
+  }
+  &:active {
+    background-color: #27496d;
+    text-shadow: -1px 1px #193047;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: darkgray;
+    &:disabled:hover {
+      background-color: darkgray;
+    }
+  }
+}

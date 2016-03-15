@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Crdit Card Validation</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.0/angular-messages.min.js"></script>
   <script src="/javascripts/formCtrl.js"></script>
   <script src="/services/Form.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
-<body ng-app="formApp" ng-controller="formCtrl">
+<body ng-app="formApp" ng-controller="formCtrl" >
+
+
 
   <div id="directions">This is NOT a secure site. Please do NOT enter your credit info.</div>
 
@@ -19,128 +23,123 @@
     <hr>
 
     <div id="fields">
-      <form  name="userForm" ng-submit="submitUserForm(userForm.$invalid, user)" novalidate>
+      <form name="userForm" ng-submit="submitUserForm(userForm.$invalid, user)" novalidate>
 
-        <input required type="text" placeholder="Credit Card Number" ng-model="user.credit" name="credit" ng-class=" {valid:!userForm.credit.$invalid}">
-
-
-        <label>Expiration Date: MM/YY</label>
-
-        <select id="months" required name="month" placeholder="Month" ng-class=" {valid:!userForm.month.$invalid}">
-          <option>January</option>       
-          <option>February</option>       
-          <option>March</option>       
-          <option>April</option>       
-          <option>May</option>       
-          <option>June</option>       
-          <option>July</option>       
-          <option>August</option>       
-          <option>September</option>       
-          <option>October</option>       
-          <option>November</option>       
-          <option>December</option>       
-        </select> -
-        <select 
-        required 
-        name="year"
-        ng-model="user.year" 
-        placeholder="YY" 
-        ng-options="year as year for year in yearArr"
-        ng-class=" {valid:!userForm.year.$invalid}">
-        >
-      </select>
-
-      <input required type="number" placeholder="CVV" name="cvv" ng-model="user.cvv" ng-pattern="cvvRegex" ng-class=" {valid:!userForm.cvv.$invalid}">
+        <label>Number on front of card.</label>
+        <input required type="text" placeholder="Credit Card Number" ng-model="user.credit" name="credit" ng-class="{valid:!userForm.credit.$invalid}">
+       
 
 
+          <div id="invalidAlert" ng-hide="creditValid">This is not a valid credit card number</div>
 
-      <input 
-      required
-      name="zip"
-      type="number" 
-      ng-pattern="zipRegex"
-      placeholder="Zipcode"
-      ng-model="user.zip"
-      ng-class=" {valid:!userForm.zip.$invalid}">
+          <label>Expiration Date: MM/YY</label>
+
+          <select id="months" required name="month" placeholder="Month" ng-class=" {valid:!userForm.month.$invalid}">
+            <option>January</option>       
+            <option>February</option>       
+            <option>March</option>       
+            <option>April</option>       
+            <option>May</option>       
+            <option>June</option>       
+            <option>July</option>       
+            <option>August</option>       
+            <option>September</option>       
+            <option>October</option>       
+            <option>November</option>       
+            <option>December</option>       
+          </select> -
+          <select 
+          required 
+          id="yearInput"
+          name="year"
+          ng-model="user.year" 
+          placeholder="YY" 
+          ng-options="year as year for year in yearArr"
+          ng-class=" {valid:!userForm.year.$invalid}">
+          >
+        </select>
+
+        <label>3 numbers on back of card.</label>
+        <input id="cvvInput"
+        <input required type="number" placeholder="CVV" name="cvv" ng-model="user.cvv" ng-pattern="cvvRegex" ng-class=" {valid:!userForm.cvv.$invalid}">
 
 
-
-      <select id="countries" ng-init="user.country = countries[0]"
-      required 
-      name="country"
-      ng-model="user.country"
-      ng-options="country as country for country in countries"
-      ng-class=" {valid:!userForm.countries.$invalid}">
-
-    </select>
+          <input 
+          id="zipInput"
+          required
+          name="zip"
+          type="number" 
+          ng-pattern="zipRegex"
+          placeholder="Zipcode"
+          ng-model="user.zip"
+          ng-class=" {valid:!userForm.zip.$invalid}">
+          
 
 
 
-
-
-    <input 
-    placeholder="Email" 
-    type="email"
-    name="email"
-    ng-model="user.email"
-    ng-pattern="emailRegex"
-    ng-class="{invalidInput: userForm.email.$invalid && userForm.email.$touched, valid:!userForm.email.$invalid}"
-    required />
+          <div ng-messages="userForm.zip.$error" style="color:red" role="alert">
+            <div ng-message="pattern || required">You did not enter an valid zipcode</div>
+          </div>
 
 
 
-    <input 
-    placeholder="Password" 
-    type="password"
-    required 
-    name="password"
-    ng-model='user.password'
-    ng-pattern="passwordRegex"
-    minlength="6" 
-    ng-class="{invalidInput: userForm.password.$invalid &&  userForm.password.$touched, valid:!userForm.password.$invalid}">
 
 
 
-    <input required type="password" 
-    ng-model='user.confirm' 
-    placeholder="Confirm Password"
-    ng-pattern="{{user.password}}"
-    name="confirm"
-    ng-class="{invalidInput: userForm.confirm.$invalid && userForm.password.$touched, valid:!userForm.confirm.$invalid}">
+          <select id="countries" ng-init="user.country = countries[0]"
+          required 
+          name="country"
+          ng-model="user.country"
+          ng-options="country as country for country in countries"
+          ng-class=" {valid:!userForm.countries.$invalid}">
+
+        </select>
 
 
-
-    <div id="invalidAlerts">
-      <div id="invalidAlert" ng-hide="creditValid">This is not a valid credit card number</div>
-      <div ng-messages="userForm.cvv.$error" style="color:red" role="alert">
-        <div ng-message="pattern || required">You did not enter an valid CVV number</div>
-
-        <div ng-messages="userForm.zip.$error" style="color:red" role="alert">
-          <div ng-message="pattern || required">You did not enter an valid zipcode</div>
-        </div>
-
-
+        <input 
+        placeholder="email@email.com" 
+        type="email"
+        name="email"
+        ng-model="user.email"
+        ng-pattern="emailRegex"
+        ng-class="{invalidInput: userForm.email.$invalid && userForm.email.$touched, valid:!userForm.email.$invalid}"
+        required />
         <div ng-messages="userForm.email.$error" style="color:red" role="alert">
           <div ng-message="pattern || required">You did not enter an valid email</div>
         </div>
 
+
+        <label>Must be at least 6 characters, 1 uppercase, 1 lowercase and 1 number.</label>
+        <input 
+        placeholder="Password" 
+        type="password"
+        required 
+        name="password"
+        ng-model='user.password'
+        ng-pattern="passwordRegex"
+        minlength="6" 
+        ng-class="{invalidInput: userForm.password.$invalid &&  userForm.password.$touched, valid:!userForm.password.$invalid}">
         <div ng-messages="userForm.password.$error" style="color:red" role="alert">
           <div ng-message="required">You did not enter a password</div>
           <div ng-message="minlength">Your password is too short</div>
-          <div ng-message="pattern">Your password must have at least 6 characters, one number one uppercase letter and one lowercase letter.</div>
+          <div ng-message="pattern">Your password must have at least 6 characters, 1 number 1 uppercase letter and 1 lowercase letter.</div>
 
+
+          <input required type="password" 
+          ng-model='user.confirm' 
+          placeholder="Confirm Password"
+          ng-pattern="{{user.password}}"
+          name="confirm"
+          ng-class="{invalidInput: userForm.confirm.$invalid && userForm.password.$touched, valid:!userForm.confirm.$invalid}">
           <div ng-show="user.password" ng-messages="userForm.confirm.$error" style=" color:red" role="alert">
             <div ng-message="pattern">Your passwords do not match</div>
           </div>
 
-          <button type="submit" ng-submit="addInfo(newInfo)">Submit</button>
+     
 
+        <div id="buttonDiv">
+          <button ng-disabled="userForm.$invalid" type="submit" ng-submit="addInfo(newInfo)">Submit</button>
         </div>
-
-
-
-
-
 
 
 
