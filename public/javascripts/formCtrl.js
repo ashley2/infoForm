@@ -2,7 +2,7 @@
 
 var app = angular.module('formApp', ['ngMessages']);
 
-app.controller('formCtrl', function($scope){
+app.controller('formCtrl', function($scope, $timeout){
 
   $scope.passwordRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   $scope.emailRegex= /(\w+\.)*(\w+@\w+\.\w+)(\.\w+)*/;
@@ -12,6 +12,7 @@ app.controller('formCtrl', function($scope){
   $scope.cvvRegex = /^[0-9]{3,4}$/
 
 
+
   $scope.submitUserForm = function(formInvalid, user){
     $scope.creditValid = valid_credit_card(user.credit)
 
@@ -19,8 +20,22 @@ app.controller('formCtrl', function($scope){
 
      console.log('form invalid') 
    } else {
-    console.log('submit') 
-  }
+    swal({   title: "Submitted!", 
+      text: "Thanks!",  
+      type: "success",   showCancelButton: true,  
+      closeOnConfirm: false, 
+      showLoaderOnConfirm: true,
+    }, function(){  
+      setTimeout(function(){   
+        location.reload(); 
+      }, 1000); });
+    // swal("Submitted!", "Thank you", "success")
+    // $scope.??? = {}
+    // swal({   title: "Submitted!",   text: "Thank You",   timer: 2000,   showConfirmButton: false });
+   //  $timeout(function() {
+   //   location.reload()
+   // }, 2000);
+ }
 }
 
 var today = new Date();
@@ -51,12 +66,5 @@ function valid_credit_card(value) {
 
   return (nCheck % 10) === 0;
 }
-
-
-
-
-
-
-
 
 })
